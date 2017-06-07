@@ -1,13 +1,34 @@
-stars <- read.table("oc_12_5000_2000_2.0_p019_0900_1.txt")
-colnames(stars) <- c('x', 'y')
-
+stars <- read.table("dataset.txt")
 epsilon <- 0.1
 alpha <- 0.5
 
-#mover colunas para outro data.frame
+################################################################################
+# normalize all columns from the df
+################################################################################
 
-#normalizar todas as colunas do data.frame
-#https://stackoverflow.com/questions/12969623/normalisation-of-a-two-column-data-using-min-and-max-values
+normalise <- function(x) {
+  ranx <- range(x, na.rm = T)
+  (x - ranx[1]) / diff(ranx)
+}
+
+stars <- apply(stars, 2, normalise)
+
+################################################################################
+# creating df with stars x and y
+################################################################################
+
+stars_coord <- data.frame(
+  stars[,1:2]
+)
+colnames(stars_coord) <- c('x', 'y')
+
+################################################################################
+# creating df with stars info
+################################################################################
+
+stars_info <- data.frame(
+  stars[,-(1:2)]
+)
 
 ################################################################################
 # step 1 - create the matrix
@@ -24,11 +45,10 @@ for(i in 1:size) {
 
 ################################################################################
 # step 2 - normalize the matrix
+# https://stackoverflow.com/questions/27455948/in-r-whats-the-simplest-way-to-scale-a-vector-to-a-unit-vector
+# https://stats.stackexchange.com/questions/53068/euclidean-distance-score-and-similarity
+# http://biom300.weebly.com/eigenvalues-and-eigenvectors-in-r.html
 ################################################################################
-
-#https://stackoverflow.com/questions/27455948/in-r-whats-the-simplest-way-to-scale-a-vector-to-a-unit-vector
-#https://stats.stackexchange.com/questions/53068/euclidean-distance-score-and-similarity
-#http://biom300.weebly.com/eigenvalues-and-eigenvectors-in-r.html
 
 d <- diag(colSums(l, na.rm = TRUE))
 da <- d^-alpha #calcular somente para a diagonal
