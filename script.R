@@ -34,22 +34,36 @@ stars_info <- data.frame(
 # step 1 - create the matrix
 ################################################################################
 
-size <- 100 #nrow(stars)
+size <- 100 #nrow(stars_coord)
 l <- matrix(nrow = size, ncol = size)
 
+# dist(rbind(stars_coord, stars_coord))
 for(i in 1:size) {
   for(j in 1:size) {
-    l[i,j] <- sqrt((stars$x[i] - stars$x[j])^2 + (stars$y[i] - stars$y[j])^2)
+    l[i,j] <- 1 - sqrt(
+      (stars_coord$x[i] - stars_coord$x[j])^2 
+      + 
+      (stars_coord$y[i] - stars_coord$y[j])^2
+    )
   }
 }
 
 ################################################################################
 # step 2 - normalize the matrix
-# https://stackoverflow.com/questions/27455948/in-r-whats-the-simplest-way-to-scale-a-vector-to-a-unit-vector
-# https://stats.stackexchange.com/questions/53068/euclidean-distance-score-and-similarity
-# http://biom300.weebly.com/eigenvalues-and-eigenvectors-in-r.html
 ################################################################################
 
 d <- diag(colSums(l, na.rm = TRUE))
-da <- d^-alpha #calcular somente para a diagonal
-la <- da * l * da
+d_a <- d^-alpha # calcular somente para a diagonal
+d_a[d_a == Inf] <- 0
+la <- d_a * l * d_a
+
+################################################################################
+# step 3 - form the normalized matrix
+################################################################################
+
+#da <- 
+
+################################################################################
+# step 4 - Compute the k largest eigenvalues and the corresponding eigenvectors
+# http://biom300.weebly.com/eigenvalues-and-eigenvectors-in-r.html
+################################################################################
