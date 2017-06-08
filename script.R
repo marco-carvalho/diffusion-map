@@ -17,18 +17,14 @@ stars <- apply(stars, 2, normalise)
 # creating df with stars x and y
 ################################################################################
 
-stars_coord <- data.frame(
-  stars[,1:2]
-)
+stars_coord <- data.frame(stars[,1:2])
 colnames(stars_coord) <- c('x', 'y')
 
 ################################################################################
 # creating df with stars info
 ################################################################################
 
-stars_info <- data.frame(
-  stars[,-(1:2)]
-)
+stars_info <- data.frame(stars[,-(1:2)])
 
 ################################################################################
 # step 1 - create the matrix
@@ -53,8 +49,7 @@ for(i in 1:size) {
 ################################################################################
 
 d <- diag(colSums(l, na.rm = TRUE))
-d_a <- d^-alpha # calcular somente para a diagonal
-d_a[d_a == Inf] <- 0
+d_a <- diag(diag(d^-alpha))
 la <- d_a %*% l %*% d_a
 
 ################################################################################
@@ -62,12 +57,12 @@ la <- d_a %*% l %*% d_a
 ################################################################################
 
 da <- diag(colSums(la, na.rm = TRUE))
-m <- solve(da)  %*% la
+m <- solve(da) %*% la
 
 ################################################################################
 # step 4 - Compute the k largest eigenvalues and the corresponding eigenvectors
 # http://biom300.weebly.com/eigenvalues-and-eigenvectors-in-r.html
 ################################################################################
 
-y<-eigen(t(m))
+y <- eigen(t(m))
 y
