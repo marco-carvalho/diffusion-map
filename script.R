@@ -55,15 +55,19 @@ for(i in 1:size) {
 d <- diag(colSums(l, na.rm = TRUE))
 d_a <- d^-alpha # calcular somente para a diagonal
 d_a[d_a == Inf] <- 0
-la <- d_a * l * d_a
+la <- d_a %*% l %*% d_a
 
 ################################################################################
 # step 3 - form the normalized matrix
 ################################################################################
 
-#da <- 
+da <- diag(colSums(la, na.rm = TRUE))
+m <- solve(da)  %*% la
 
 ################################################################################
 # step 4 - Compute the k largest eigenvalues and the corresponding eigenvectors
 # http://biom300.weebly.com/eigenvalues-and-eigenvectors-in-r.html
 ################################################################################
+
+y<-eigen(t(m))
+y
