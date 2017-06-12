@@ -1,4 +1,6 @@
-stars <- read.table("dataset.txt")
+#df <- read.table("dataset.txt")
+df <- iris
+plot(iris$Sepal.Length, iris$Sepal.Width)
 epsilon <- 0.1
 alpha <- 0.5
 
@@ -11,35 +13,35 @@ normalise <- function(x) {
   (x - ranx[1]) / diff(ranx)
 }
 
-stars <- apply(stars, 2, normalise)
+df <- apply(df, 2, normalise)
 
 ################################################################################
-# creating df with stars x and y
+# creating df with df x and y
 ################################################################################
 
-stars_coord <- data.frame(stars[,1:2])
-colnames(stars_coord) <- c('x', 'y')
+df_coord <- data.frame(df[,1:2])
+colnames(df_coord) <- c('x', 'y')
 
 ################################################################################
-# creating df with stars info
+# creating df with df info
 ################################################################################
 
-stars_info <- data.frame(stars[,-(1:2)])
+df_info <- data.frame(df[,-(1:2)])
 
 ################################################################################
 # step 1 - create the matrix
 ################################################################################
 
-size <- 100 #nrow(stars_coord)
+size <- 100 #nrow(df_coord)
 l <- matrix(nrow = size, ncol = size)
 
-# dist(rbind(stars_coord, stars_coord))
+# dist(rbind(df_coord, df_coord))
 for(i in 1:size) {
   for(j in 1:size) {
     l[i,j] <- 1 - sqrt(
-      (stars_coord$x[i] - stars_coord$x[j])^2 
+      (df_coord$x[i] - df_coord$x[j])^2 
       + 
-      (stars_coord$y[i] - stars_coord$y[j])^2
+      (df_coord$y[i] - df_coord$y[j])^2
     )
   }
 }
@@ -65,4 +67,3 @@ m <- solve(da) %*% la
 ################################################################################
 
 y <- eigen(t(m))
-y
