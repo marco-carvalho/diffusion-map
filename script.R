@@ -19,12 +19,13 @@ colnames(df_coord) <- c('x', 'y')
 df_info <- data.frame(apply(df_info, 2, normalize_column))
 
 ################################################################################
-# step 1 - create the matrix
+# step 1 - create the diffusion matrix
 ################################################################################
 
 size <- 100 #nrow(df_coord)
 l <- matrix(nrow = size, ncol = size)
 
+# l <- apply(df_coord, 2, dist(rbind()))
 # dist(rbind(df_coord, df_coord))
 for(i in 1:size) {
   for(j in 1:size) {
@@ -37,7 +38,7 @@ for(i in 1:size) {
 }
 
 ################################################################################
-# step 2 - normalize the matrix
+# step 2 - apply the matrix normalization
 ################################################################################
 
 diagonal <- function(matrix) {
@@ -51,17 +52,16 @@ normalize <- function(matrix, alpha) {
 }
 
 ################################################################################
-# step 3 - form the normalized matrix
+# step 3 - apply the graph Laplacian normalization
 ################################################################################
 
-normalized <- function(matrix) {
+laplacian_norm <- function(matrix) {
   solve(diagonal(normalize(matrix, alpha))) %*% normalize(matrix, alpha)
 }
 
 ################################################################################
-# step 4 - Compute the k largest eigenvalues and the corresponding eigenvectors
+# step 4 - compute the k largest eigenvalues and the corresponding eigenvectors
 # http://biom300.weebly.com/eigenvalues-and-eigenvectors-in-r.html
 ################################################################################
 
-df_eigen <- eigen(t(normalized(l)))
-df_eigen
+df_eigen <- eigen(t(laplacian_norm(l)))
