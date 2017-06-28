@@ -1,35 +1,42 @@
 ################################################################################
-# using lib
+# return matrix with normalized columns
 ################################################################################
 
-source("lib.r")
+normalize_column <- function(matrix) {
+  range <- range(matrix, na.rm = T)
+  (matrix - range[1]) / diff(range)
+}
 
 ################################################################################
-# defining df and variables
+# return matrix with the sums of cols in the diag
 ################################################################################
 
-# df <- read.table("dataset.txt")[,-c(4,6,8,10,12,14,16,18,19)]
-df <- iris[,-5]
-epsilon <- 0.1
-alpha <- 0.5
+diag_colSums <- function(matrix) {
+  diag(colSums(matrix, na.rm = TRUE))
+}
 
 ################################################################################
-# normalize all columns from the df
+# return normalized matrix
 ################################################################################
 
-df <- data.frame(apply(df, 2, normalize_column))
+normalize <- function(matrix, alpha) {
+  d <- diag_colSums(matrix)
+  d_a <- diag(diag(d^-alpha))
+  d_a %*% matrix %*% d_a
+}
 
 ################################################################################
-# create the diffusion matrix
+# step 3 - apply the graph Laplacian normalization
 ################################################################################
 
-l <- as.matrix(dist(df))
+laplacian_norm <- function(matrix) {
+  solve(diag_colSums(normalize(matrix, alpha))) %*% normalize(matrix, alpha)
+}
 
 ################################################################################
-# plot the 2nd and 3rd eigenvectors
+# step 4 - compute the k largest eigenvalues and the corresponding eigenvectors
 ################################################################################
 
-plot(
-  eigen_matrix(l)$vectors[,2],
-  eigen_matrix(l)$vectors[,3]
-)
+eigen_matrix <- function(matrix) {
+  eigen(t(laplacian_norm(matrix)))
+}
