@@ -30,8 +30,15 @@ l <- as.matrix(dist(df))
 ################################################################################
 
 plot(
-  eigen_matrix(l)$vectors[,2],
-  eigen_matrix(l)$vectors[,3],
-  col = c(iris$Species, iris$Species)
+  x = eigen_matrix(l)$vectors[,2],
+  y = eigen_matrix(l)$vectors[,3],
+  pch = 21,
+  bg = c("red","green3","blue")[unclass(iris$Species)]
 )
-
+legend(
+  x = 'center',
+  pch = 16,
+  legend = c(levels(iris$Species)),
+  col = c("red","green3","blue"),
+  text.col = c("red","green3","blue")
+)
