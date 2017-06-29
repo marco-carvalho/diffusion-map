@@ -26,10 +26,12 @@ df <- data.frame(apply(df, 2, normalize_column))
 l <- as.matrix(dist(df))
 
 ################################################################################
-# plot the 2nd and 3rd eigenvectors
+# plot the eigenvectors
 ################################################################################
 
 plot(
   eigen_matrix(l)$vectors[,2],
-  eigen_matrix(l)$vectors[,3]
+  eigen_matrix(l)$vectors[,3],
+  col = c(iris$Species, iris$Species)
 )
+
