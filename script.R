@@ -10,6 +10,7 @@ source("lib.r")
 
 # df <- read.table("dataset.txt")[,-c(4,6,8,10,12,14,16,18,19)]
 df <- iris[,-5]
+df.col <- iris[,5]
 epsilon <- 0.1
 alpha <- 0.5
 
@@ -33,12 +34,12 @@ plot(
   x = eigen_matrix(l)$vectors[,2],
   y = eigen_matrix(l)$vectors[,3],
   pch = 21,
-  bg = c("red","green3","blue")[unclass(iris$Species)]
+  bg = c(1:length(unique(df.col)))[unclass(df.col)]
 )
 legend(
   x = 'center',
   pch = 16,
-  legend = c(levels(iris$Species)),
-  col = c("red","green3","blue"),
-  text.col = c("red","green3","blue")
+  legend = c(levels(df.col)),
+  col = c(1:length(unique(df.col))),
+  text.col = c(1:length(unique(df.col)))
 )
