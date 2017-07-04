@@ -2,15 +2,21 @@
 # using lib
 ################################################################################
 
-source("lib.r")
+source("lib.R")
 
 ################################################################################
 # defining df and variables
 ################################################################################
 
+file <- iris
+# file <- read.table("dataset.txt")
+unwanteded_cols <- c(5)
 # df <- read.table("dataset.txt")[,-c(4,6,8,10,12,14,16,18,19)]
-df <- iris[,-5]
-df.col <- iris[,5]
+df <- file[,-(unwanteded_cols)]
+
+color_col_index <- 5
+df.col <- file[, color_col_index]
+
 epsilon <- 0.1
 alpha <- 0.5
 
