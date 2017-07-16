@@ -8,23 +8,23 @@ normalize_column <- function(matrix) {
 }
 
 ################################################################################
-# generate iris df and its color index
+# generate iris/stars df and its color index
 ################################################################################
 
 iris_df <- function() {
   iris[,-5]
 }
 
+stars_df <- function(df) {
+  df[,-c(4,6,8,10,12,14,16,18,19)]
+}
+
 iris_color_index <- function() {
   iris[, 5]
 }
 
-################################################################################
-# generate stars df and its color index
-################################################################################
-
-stars_df <- function() {
-  
+stars_color_index <- function(df) {
+  df[, 19]
 }
 
 ################################################################################
