@@ -2,7 +2,7 @@
 # downloading packages
 ################################################################################
 
-install.packages("plot3D")
+# install.packages("plot3D")
 
 ################################################################################
 # using downloaded packages
