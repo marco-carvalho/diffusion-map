@@ -2,13 +2,13 @@
 # downloading packages
 ################################################################################
 
-# install.packages("plot3D")
+install.packages("plot3D")
 
 ################################################################################
 # using downloaded packages
 ################################################################################
 
-# library("plot3D")
+library("plot3D")
 
 ################################################################################
 # using lib
@@ -23,18 +23,8 @@ source("lib.R")
 df <- iris_df()
 df.col <- iris_color_index()
 
-################################################################################
-# loop through the df folder
-################################################################################
-
-for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
-{
-  file <- read.table(i)
-  df <- stars_df(file)
-  df.col <- stars_color_index(file)
-  
-  epsilon <- 0.1
-  alpha <- 0.5
+epsilon <- 0.1
+alpha <- 0.5
   
 ################################################################################
 # create the diffusion matrix from a normalized df
@@ -56,32 +46,19 @@ l <- as.matrix(
 # saving the eigenvectors plot by: defining the filename, ploting and saving
 ################################################################################
 
-png(
-  filename = paste(
-    substr(
-      x = i, 
-      start = 1, 
-      stop = nchar(i)-3
-    ),
-    "png",
-    sep = ""
-  )
-)
-
-plot(
+scatter3D(
   x = eigen_matrix(l)$vectors[,2],
   y = eigen_matrix(l)$vectors[,3],
+  z = eigen_matrix(l)$vectors[,4],
+  colvar = NULL,
   col = 1:length(unique(df.col)),
-  pch = 16
+  pch = 16,
+  theta = 45,
+  phi = 45
 )
 legend(
-  x = 'center',
-  y = 'groups',
+  x = 'bottomleft',
   legend = unique(df.col),
   col = 1:length(df.col),
   pch = 16
 )
-
-dev.off()
-
-}
