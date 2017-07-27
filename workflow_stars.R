@@ -61,7 +61,7 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
     )
   )
   
-  plot(
+  scatter3D(
     x = eigen_matrix(l)$vectors[,2],
     y = eigen_matrix(l)$vectors[,3],
     z = eigen_matrix(l)$vectors[,4],
