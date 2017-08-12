@@ -46,19 +46,31 @@ l <- as.matrix(
 # saving the eigenvectors plot by: defining the filename, ploting and saving
 ################################################################################
 
+par(mfrow=c(1,2))
+
+plot(
+  x = eigen_matrix(l)$vectors[,2],
+  y = eigen_matrix(l)$vectors[,3],
+  col = df.col,
+  pch = 16,
+  xlab = "",
+  ylab = ""
+)
+
 scatter3D(
   x = eigen_matrix(l)$vectors[,2],
   y = eigen_matrix(l)$vectors[,3],
   z = eigen_matrix(l)$vectors[,4],
   colvar = NULL,
-  col = 1:length(unique(df.col)),
+  col = df.col,
   pch = 16,
   theta = 45,
   phi = 45
 )
+
 legend(
   x = 'bottomleft',
-  legend = unique(df.col),
+  legend = levels(df.col),
   col = 1:length(df.col),
   pch = 16
 )
