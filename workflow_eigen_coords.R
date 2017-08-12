@@ -20,35 +20,35 @@ source("lib.R")
 # loop through the df folder
 ################################################################################
 
-for(i in dir(path = "../datasets", pattern = "*.txt", full.names = T))
+for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
 {
   file <- read.table(i)
   df <- stars_df(file)
   df.col <- stars_color_index(file)
-  
+
   epsilon <- 0.1
   alpha <- 0.5
-  
+
   ##############################################################################
   # create the diffusion matrix from a normalized df
   ##############################################################################
-  
+
   l <- as.matrix(
     x = dist(
       data.frame(
         apply(
-          X = df, 
-          MARGIN = 2, 
+          X = df,
+          MARGIN = 2,
           FUN = normalize_column
         )
       )
     )
   )
-    
+
   ##############################################################################
   # saving the eigenvectors plot by: defining the filename, ploting and saving
   ##############################################################################
-  
+
   write.table(
     data.frame(
       eigen_matrix(l)$vectors[,2],
@@ -58,10 +58,10 @@ for(i in dir(path = "../datasets", pattern = "*.txt", full.names = T))
       df.col
     ),
     file = paste(
-      "../results/eigen_coords/",
+      "results/",
       substr(
-        x = i, 
-        start = 1, 
+        x = i,
+        start = 1,
         stop = nchar(i)-3
       ),
       "eigen.txt",
