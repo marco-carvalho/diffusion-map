@@ -20,7 +20,7 @@ source("lib.R")
 # loop through the df folder
 ################################################################################
 
-for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
+for(i in dir(path = "../datasets", pattern = "*.txt", full.names = T))
 {
   file <- read.table(i)
   df <- stars_df(file)
@@ -53,6 +53,7 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
 
   png(
     filename = paste(
+      "../results/plots/",
       substr(
         x = i,
         start = 1,

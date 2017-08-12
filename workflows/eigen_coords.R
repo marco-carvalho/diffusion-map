@@ -20,7 +20,7 @@ source("lib.R")
 # loop through the df folder
 ################################################################################
 
-for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
+for(i in dir(path = "../datasets", pattern = "*.txt", full.names = T))
 {
   file <- read.table(i)
   df <- stars_df(file)
@@ -58,6 +58,7 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
       df.col
     ),
     file = paste(
+      "../results/eigen_coords/",
       substr(
         x = i, 
         start = 1, 
