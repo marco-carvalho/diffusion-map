@@ -19,19 +19,19 @@ normalize_column <- function(matrix) {
 ################################################################################
 
 iris_df <- function() {
-  iris[,-5]
-}
-
-stars_df <- function(df) {
-  df[,-c(4,6,8,10,12,14,16,18,19)]
+  iris[, -5]
 }
 
 iris_color_index <- function() {
   iris[, 5]
 }
 
+stars_df <- function(df) {
+  df[, -5]
+}
+
 stars_color_index <- function(df) {
-  df[, 19]
+  df[, 5]
 }
 
 ################################################################################

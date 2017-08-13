@@ -20,29 +20,11 @@ source("lib.R")
 # loop through the df folder
 ################################################################################
 
-for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
+for(i in dir(path = "datasets", pattern = "*.csv", full.names = T))
 {
   file <- read.table(i)
   df <- stars_df(file)
   df.col <- stars_color_index(file)
-
-  ##############################################################################
-  # create the eigen matrix
-  ##############################################################################
-  
-  eigen <- eigen_matrix(
-    as.matrix(
-      x = dist(
-        data.frame(
-          apply(
-            X = df,
-            MARGIN = 2,
-            FUN = normalize_column
-          )
-        )
-      )
-    )
-  )
   
   ##############################################################################
   # saving the eigenvectors plot by: defining the filename, ploting and saving
@@ -50,21 +32,9 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
   
   par(mfrow=c(1,2))
 
-  png(
-    filename = paste(
-      substr(
-        x = i,
-        start = 1,
-        stop = nchar(i)-3
-      ),
-      "png",
-      sep = ""
-    )
-  )
-
   plot(
-    x = eigen$vectors[,2],
-    y = eigen$vectors[,3],
+    x = df$V1,
+    y = df$V2,
     col = df.col + 1,
     pch = 16,
     xlab = "",
@@ -72,9 +42,9 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
   )
 
   scatter3D(
-    x = eigen$vectors[,2],
-    y = eigen$vectors[,3],
-    z = eigen$vectors[,4],
+    x = df$V1,
+    y = df$V2,
+    z = df$V3,
     colvar = NULL,
     col = df.col + 1,
     pch = 16,
@@ -87,6 +57,23 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
     legend = unique(df.col),
     col = 1:length(df.col),
     pch = 16
+  )
+  
+  dev.copy(
+    png,
+    paste(
+      substr(
+        x = i,
+        start = 1,
+        stop = nchar(i)-3
+      ),
+      "png",
+      sep = ""
+    ),
+    width = 8,
+    height = 6,
+    units = "in",
+    res = 100
   )
 
   dev.off()
