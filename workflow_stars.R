@@ -85,7 +85,7 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
 
   legend(
     x = 'bottomleft',
-    legend = levels(df.col),
+    legend = unique(df.col),
     col = 1:length(df.col),
     pch = 16
   )

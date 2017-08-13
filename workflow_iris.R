@@ -25,7 +25,7 @@ df.col <- iris_color_index()
 
 epsilon <- 0.1
 alpha <- 0.5
-  
+
 ################################################################################
 # create the diffusion matrix from a normalized df
 ################################################################################
@@ -34,14 +34,14 @@ l <- as.matrix(
   x = dist(
     data.frame(
       apply(
-        X = df, 
-        MARGIN = 2, 
+        X = df,
+        MARGIN = 2,
         FUN = normalize_column
       )
     )
   )
 )
-  
+
 ################################################################################
 # saving the eigenvectors plot by: defining the filename, ploting and saving
 ################################################################################
@@ -70,7 +70,7 @@ scatter3D(
 
 legend(
   x = 'bottomleft',
-  legend = levels(df.col),
+  legend = unique(df.col),
   col = 1:length(df.col),
   pch = 16
 )
