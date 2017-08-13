@@ -26,20 +26,19 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
   df <- stars_df(file)
   df.col <- stars_color_index(file)
 
-  epsilon <- 0.1
-  alpha <- 0.5
-
   ##############################################################################
   # create the diffusion matrix from a normalized df
   ##############################################################################
-
-  l <- as.matrix(
-    x = dist(
-      data.frame(
-        apply(
-          X = df,
-          MARGIN = 2,
-          FUN = normalize_column
+  
+  eigen <- eigen_matrix(
+    matrix = as.matrix(
+      x = dist(
+        data.frame(
+          apply(
+            X = df,
+            MARGIN = 2,
+            FUN = normalize_column
+          )
         )
       )
     )
@@ -50,11 +49,11 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
   ##############################################################################
 
   write.table(
-    data.frame(
-      eigen_matrix(l)$vectors[,2],
-      eigen_matrix(l)$vectors[,3],
-      eigen_matrix(l)$vectors[,4],
-      eigen_matrix(l)$vectors[,5],
+    x = data.frame(
+      eigen$vectors[,2],
+      eigen$vectors[,3],
+      eigen$vectors[,4],
+      eigen$vectors[,5],
       df.col
     ),
     file = paste(

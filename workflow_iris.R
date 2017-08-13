@@ -23,20 +23,19 @@ source("lib.R")
 df <- iris_df()
 df.col <- iris_color_index()
 
-epsilon <- 0.1
-alpha <- 0.5
-
 ################################################################################
 # create the diffusion matrix from a normalized df
 ################################################################################
 
-l <- as.matrix(
-  x = dist(
-    data.frame(
-      apply(
-        X = df,
-        MARGIN = 2,
-        FUN = normalize_column
+eigen <- eigen_matrix(
+  as.matrix(
+    x = dist(
+      data.frame(
+        apply(
+          X = df,
+          MARGIN = 2,
+          FUN = normalize_column
+        )
       )
     )
   )
@@ -49,8 +48,8 @@ l <- as.matrix(
 par(mfrow=c(1,2))
 
 plot(
-  x = eigen_matrix(l)$vectors[,2],
-  y = eigen_matrix(l)$vectors[,3],
+  x = eigen$vectors[,2],
+  y = eigen$vectors[,3],
   col = df.col,
   pch = 16,
   xlab = "",
@@ -58,9 +57,9 @@ plot(
 )
 
 scatter3D(
-  x = eigen_matrix(l)$vectors[,2],
-  y = eigen_matrix(l)$vectors[,3],
-  z = eigen_matrix(l)$vectors[,4],
+  x = eigen$vectors[,2],
+  y = eigen$vectors[,3],
+  z = eigen$vectors[,4],
   colvar = NULL,
   col = df.col,
   pch = 16,

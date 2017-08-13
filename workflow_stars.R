@@ -26,29 +26,28 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
   df <- stars_df(file)
   df.col <- stars_color_index(file)
 
-  epsilon <- 0.1
-  alpha <- 0.5
-
   ##############################################################################
-  # create the diffusion matrix from a normalized df
+  # create the eigen matrix
   ##############################################################################
-
-  l <- as.matrix(
-    x = dist(
-      data.frame(
-        apply(
-          X = df,
-          MARGIN = 2,
-          FUN = normalize_column
+  
+  eigen <- eigen_matrix(
+    as.matrix(
+      x = dist(
+        data.frame(
+          apply(
+            X = df,
+            MARGIN = 2,
+            FUN = normalize_column
+          )
         )
       )
     )
   )
-
+  
   ##############################################################################
   # saving the eigenvectors plot by: defining the filename, ploting and saving
   ##############################################################################
-
+  
   par(mfrow=c(1,2))
 
   png(
@@ -64,20 +63,20 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
   )
 
   plot(
-    x = eigen_matrix(l)$vectors[,2],
-    y = eigen_matrix(l)$vectors[,3],
-    col = df.col,
+    x = eigen$vectors[,2],
+    y = eigen$vectors[,3],
+    col = df.col + 1,
     pch = 16,
     xlab = "",
     ylab = ""
   )
 
   scatter3D(
-    x = eigen_matrix(l)$vectors[,2],
-    y = eigen_matrix(l)$vectors[,3],
-    z = eigen_matrix(l)$vectors[,4],
+    x = eigen$vectors[,2],
+    y = eigen$vectors[,3],
+    z = eigen$vectors[,4],
     colvar = NULL,
-    col = df.col,
+    col = df.col + 1,
     pch = 16,
     theta = 45,
     phi = 45
