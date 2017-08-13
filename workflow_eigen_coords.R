@@ -58,13 +58,12 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
       df.col
     ),
     file = paste(
-      "results/",
       substr(
         x = i,
         start = 1,
         stop = nchar(i)-3
       ),
-      "eigen.txt",
+      "eigen.csv",
       sep = ""
     ),
     row.names = F,

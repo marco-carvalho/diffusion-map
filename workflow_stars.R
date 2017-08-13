@@ -53,7 +53,6 @@ for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
 
   png(
     filename = paste(
-      "results/",
       substr(
         x = i,
         start = 1,
