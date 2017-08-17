@@ -27,11 +27,11 @@ iris_color_index <- function() {
 }
 
 stars_df <- function(df) {
-  df[, -5]
+  df[,-c(4,6,8,10,12,14,16,18,19)]
 }
 
 stars_color_index <- function(df) {
-  df[, 5]
+  df[, 19]
 }
 
 ################################################################################

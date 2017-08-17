@@ -20,7 +20,7 @@ source("lib.R")
 # loop through the df folder
 ################################################################################
 
-for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
+for(i in dir(path = "results", pattern = "*.txt", full.names = T))
 {
   print(
     paste(
