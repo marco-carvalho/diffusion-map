@@ -23,8 +23,8 @@ source("lib.R")
 for(i in dir(path = "datasets", pattern = "*.csv", full.names = T))
 {
   file <- read.table(i)
-  df <- stars_df(file)
-  df.col <- stars_color_index(file)
+  df <- gen_df(file)
+  df.col <- gen_color_index(file)
   
   ##############################################################################
   # saving the eigenvectors plot by: defining the filename, ploting and saving

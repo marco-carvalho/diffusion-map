@@ -18,6 +18,14 @@ normalize_column <- function(matrix) {
 # generate iris/stars df and its color index
 ################################################################################
 
+gen_df <- function(df) {
+  df[, -5]
+}
+
+gen_color_index <- function(df) {
+  df[, 5]
+}
+
 iris_df <- function() {
   iris[, -5]
 }
