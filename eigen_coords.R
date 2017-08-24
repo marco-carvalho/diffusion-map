@@ -20,16 +20,8 @@ source("lib.R")
 # loop through the df folder
 ################################################################################
 
-for(i in dir(path = "results", pattern = "*.txt", full.names = T))
+for(i in dir(path = "datasets", pattern = "*.txt", full.names = T))
 {
-  print(
-    paste(
-      format(Sys.time(), "%X"),
-      "- creating eigen coords for", 
-      i
-    )
-  )
-
   file <- read.table(i)
   df <- stars_df(file)
   df.col <- stars_color_index(file)
@@ -76,6 +68,4 @@ for(i in dir(path = "results", pattern = "*.txt", full.names = T))
     row.names = F,
     col.names = F
   )
-  
-  print(paste("successfully created eigen coords for", i))
 }
