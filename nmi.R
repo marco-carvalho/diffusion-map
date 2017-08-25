@@ -1,10 +1,12 @@
-library(ggplot2)
+# install.packages("infotheo")
 
 ################################################################################
 # using lib
 ################################################################################
 
 source("lib.R")
+library(ggplot2)
+library(infotheo)
 
 ################################################################################
 # defining df and variables
@@ -46,3 +48,11 @@ mutinformation(x,y)/((entropy(x) + entropy(y))/2)
 x = kmeans(eigen$vectors[, 2:4], 3)$cluster
 y = iris$Species
 mutinformation(x,y)/((entropy(x) + entropy(y))/2) 
+
+x = kmeans(iris[, 1:4], 3)$cluster
+y = iris$Species
+mutinformation(x,y)/((entropy(x) + entropy(y))/2) 
+
+par(mfrow=c(1,2))
+plot(eigen$vectors[, 2])
+plot(eigen$vectors[, 2:3])
