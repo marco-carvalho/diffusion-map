@@ -30,12 +30,10 @@ df.col <- iris_color_index()
 eigen <- eigen_matrix(
   as.matrix(
     x = dist(
-      data.frame(
-        apply(
-          X = df,
-          MARGIN = 2,
-          FUN = normalize_column
-        )
+      x = apply(
+        X = df,
+        MARGIN = 2,
+        FUN = normalize_column
       )
     )
   )
@@ -45,28 +43,38 @@ eigen <- eigen_matrix(
 # saving the eigenvectors plot by: defining the filename, ploting and saving
 ################################################################################
 
-par(mfrow=c(1,2))
-
+par(mfrow=c(3,1))
 plot(
-  x = eigen$vectors[,2],
-  y = eigen$vectors[,3],
-  col = df.col,
-  pch = 16,
-  xlab = "",
-  ylab = ""
+  x = eigen$vectors[, 2],
+  col = iris$Species,
+  pch = 16
 )
-
+legend(
+  x = 'topleft',
+  legend = unique(df.col),
+  col = 1:length(df.col),
+  pch = 16
+)
+plot(
+  x = eigen$vectors[, 2],
+  y = eigen$vectors[, 3],
+  col = iris$Species,
+  pch = 16
+)
+legend(
+  x = 'bottomleft',
+  legend = unique(df.col),
+  col = 1:length(df.col),
+  pch = 16
+)
 scatter3D(
-  x = eigen$vectors[,2],
-  y = eigen$vectors[,3],
-  z = eigen$vectors[,4],
+  x = eigen$vectors[, 2], 
+  y = eigen$vectors[, 3], 
+  z = eigen$vectors[, 4], 
   colvar = NULL,
-  col = df.col,
-  pch = 16,
-  theta = 45,
-  phi = 45
+  col = iris$Species,
+  pch = 16
 )
-
 legend(
   x = 'bottomleft',
   legend = unique(df.col),

@@ -13,43 +13,26 @@ library(plot3D)
 # defining df and variables
 ################################################################################
 
-df <- iris_df()
-df.col <- iris_color_index()
-
-################################################################################
-# create the diffusion matrix from a normalized df
-################################################################################
-
-eigen <- eigen_matrix(
-  as.matrix(
-    x = dist(
-      data.frame(
-        apply(
-          X = df,
-          MARGIN = 2,
-          FUN = normalize_column
-        )
-      )
-    )
-  )
-)
+file <- read.table("datasets/oc_12_5000_4000_4.0_p019_0950_1.eigen.csv")
+df <- gen_df(file)
+df.col <- gen_color_index(file)
 
 ################################################################################
 # testing the quality of the generated cluster with the NMI
 ################################################################################
 
-x = kmeans(eigen$vectors[, 2], 3)$cluster
+x = kmeans(df[, 2], 2)$cluster
 y = df.col
 mutinformation(x,y)/((entropy(x) + entropy(y))/2) 
 
-x = kmeans(eigen$vectors[, 2:3], 3)$cluster
+x = kmeans(df[, 2:3], 2)$cluster
 y = df.col
 mutinformation(x,y)/((entropy(x) + entropy(y))/2) 
 
-x = kmeans(eigen$vectors[, 2:4], 3)$cluster
+x = kmeans(df[, 2:4], 2)$cluster
 y = df.col
 mutinformation(x,y)/((entropy(x) + entropy(y))/2) 
 
-x = kmeans(iris[, 1:4], 3)$cluster
+x = kmeans(df[, 1:4], 2)$cluster
 y = df.col
 mutinformation(x,y)/((entropy(x) + entropy(y))/2)
